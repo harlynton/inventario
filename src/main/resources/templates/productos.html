@@ -51,6 +51,7 @@
                 <th scope="col">Nombre Producto</th>
                 <th scope="col">Precio Producto</th>
                 <th scope="col">Categoria</th>
+                <th scope="col" colspan="2">Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -59,6 +60,10 @@
                 <td th:text="${producto.nombre}"></td>
                 <td th:text="${producto.precio}"></td>
                 <td th:text="${producto.categoria.nombre}"></td>
+                <td>
+                    <a class="btn btn-success" th:href="@{'/productos/edit'+'/'+ ${producto.id}}" role="button">Editar</a>
+                    <a class="btn btn-danger" th:href="@{'/productos/delete'+'/'+ ${producto.id}}" role="button">Eliminar</a>
+                </td>
             </tr>
             </tbody>
         </table>
