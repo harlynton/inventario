@@ -2,6 +2,7 @@ package com.harlynton.inventario.producto;
 
 import com.harlynton.inventario.categoria.Categoria;
 import com.harlynton.inventario.categoria.CategoriaRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,18 @@ public class ProductoController {
     }
 
     @PostMapping("/productos/save")
-    public String guardarProducto(Producto producto){
+    public String guardarProducto(Producto producto, HttpServletRequest request){
+        String[] detallesId = request.getParameterValues("detallesId");
+        String[] detallesNombres = request.getParameterValues("detallesNombre");
+        String[] detallesValores = request.getParameterValues("detallesValor");
+
+        for (int i=0; i < detallesNombres.length; i++ ){
+            if (detallesId != null && detallesId.length > 0){
+                producto.setDetalle(Integer.valueOf(detallesId[i]),detallesNombres[i],detallesValores[i]);
+            }else {
+                producto.addDetalles(detallesNombres[i],detallesValores[i]);
+            }
+        }
         productoRepository.save(producto);
         return "redirect:/productos";
     }
